@@ -1,7 +1,7 @@
 # Online_Quiz_Website
 
 ## Synopsis
-A website for Online Quizes.
+A website for Online Quizzes.
 
 ## Contributors
 1. Ahmad Marwan Kilani.
