@@ -17,7 +17,7 @@ A website for Online Quizzes.
 4. Bootstrap.
 
 ## Tools
-1. Google CHrome.
+1. Google Chrome.
 2. Windows 10.
 3. Visual Studio Code.
 4. Git & Github.
