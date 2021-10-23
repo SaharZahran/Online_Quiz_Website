@@ -3,6 +3,7 @@ const question = document.querySelector(".question");
 const allAnswers = document.querySelector(".all-answers");
 const spans = document.querySelector(".spans");
 const container = document.querySelector(".quiz-container");
+const results = document.querySelector(".results");
 let userAnswer;
 let numOfQuestion = 0;
 let right_answer;
@@ -31,7 +32,6 @@ function loadQuestions(number) {
             });
     }
 }
-
 loadQuestions(numOfQuestion);
 submit_Button.addEventListener("click", () => {
     checkRightAnswer(right_answer);
@@ -47,7 +47,7 @@ submit_Button.addEventListener("click", () => {
             container.appendChild(result);
             console.log(user_answers);
             console.log(right_answers);
-        } else {}
+        }
     }, 700);
 });
 
@@ -66,14 +66,17 @@ function addQuestion(arrayOfOptions, number_of_question) {
     questionText.textContent = number_of_question;
     question.appendChild(questionText);
 
+
     for (let i = 0; i <= 3; i++) {
         const answer = document.createElement("div");
         answer.classList.add("answer");
         const input = document.createElement("input");
         input.name = "answer";
         input.type = "radio";
+        input.className = "inputRadio";
         input.id = `answer${i}`;
         const label = document.createElement("label");
+        label.setAttribute("for", `answer${i}`);
         label.textContent = arrayOfOptions[i];
         answer.appendChild(input);
         answer.appendChild(label);
@@ -112,3 +115,18 @@ function storeResult() {
     localStorage.setItem("user-answers", user_answers);
     localStorage.setItem("right-answers", right_answers);
 }
+
+// fetch(
+//   "https://raw.githubusercontent.com/SaharZahran/Online_Quiz_Website/main/quiz_questions.json"
+// )
+//   .then((response) => response.json())
+//   .then((data) => {
+//     console.log(data["Quiz1"]);
+//     options = data[quiz_number][number].options;
+//     console.log(options);
+//     addQuestion(options, data[quiz_number][number].Question);
+//     createBullets(number);
+
+//     right_answer = data[quiz_number][number].right_answer;
+//     console.log(right_answer);
+//   });
