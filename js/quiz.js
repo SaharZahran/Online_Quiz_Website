@@ -13,7 +13,9 @@ let right_answers = [];
 let options;
 let quiz_number = JSON.parse(localStorage.getItem("quiz_number"));
 const questionsNum = document.querySelector(".questionsNum");
-let end_iteration;
+let number_of_passed_quizzes;
+let average_point;
+let number_of_all_user_quizzes;
 
 function loadQuestions(number) {
     if (number < 5) {
@@ -23,12 +25,10 @@ function loadQuestions(number) {
             .then((response) => response.json())
             .then((data) => {
                 options = data[quiz_number][number].options;
-                console.log(options);
                 addQuestion(options, data[quiz_number][number].Question);
                 createBullets(number);
 
                 right_answer = data[quiz_number][number].right_answer;
-                console.log(right_answer);
             });
     }
 }
@@ -36,7 +36,6 @@ loadQuestions(numOfQuestion);
 submit_Button.addEventListener("click", () => {
     checkRightAnswer(right_answer);
     setTimeout(() => {
-        console.log(numOfQuestion);
         numOfQuestion++;
         reset();
         loadQuestions(numOfQuestion);
@@ -45,8 +44,16 @@ submit_Button.addEventListener("click", () => {
             const result = document.createElement("p");
             result.innerHTML = `Your score is:${correct} / 5`;
             container.appendChild(result);
-            console.log(user_answers);
-            console.log(right_answers);
+        } else {
+            if (correct >= 3) {
+                number_of_passed_quizzes++;
+                number_of_all_user_quizzes++;
+            } else {
+                number_of_all_user_quizzes++;
+            }
+            if (localStorage.getItem('number_of_passed_quizzes') !== null && localStorage.getItem('number_of_all_user_quizzes')) {
+                average_point = (correct / 5) * 100 + `%`;
+            }
         }
     }, 700);
 });
@@ -116,17 +123,11 @@ function storeResult() {
     localStorage.setItem("right-answers", right_answers);
 }
 
-// fetch(
-//   "https://raw.githubusercontent.com/SaharZahran/Online_Quiz_Website/main/quiz_questions.json"
-// )
-//   .then((response) => response.json())
-//   .then((data) => {
-//     console.log(data["Quiz1"]);
-//     options = data[quiz_number][number].options;
-//     console.log(options);
-//     addQuestion(options, data[quiz_number][number].Question);
-//     createBullets(number);
+function countPassedQuizzes() {
+    const userAnswers = localStorage.getItem("user-answers");
+    const rightAnswers = localStorage.getItem('right-answers');
+    console.log(userAnswers);
+    console.log(rightAnswers);
 
-//     right_answer = data[quiz_number][number].right_answer;
-//     console.log(right_answer);
-//   });
+}
+countPassedQuizzes();
