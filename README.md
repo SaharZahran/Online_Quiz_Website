@@ -1,8 +1,5 @@
 # Project2_Online_Quiz_Website
 
-# Online_Quiz_Website
-# Online_Quiz_Website
-
 ## Synopsis
 A website for Online Quizzes.
 
