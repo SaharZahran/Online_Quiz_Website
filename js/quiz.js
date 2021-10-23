@@ -83,6 +83,9 @@ function addQuestion(arrayOfOptions, number_of_question) {
   }
 }
 
+let tickIconTag = '<div class="icon tick"><i class="fas fa-check"></i></div>';
+let crossIconTag = '<div class="icon cross"><i class="fas fa-times"></i></div>';
+
 function checkRightAnswer(correct_answer) {
   const inputAnswers = document.querySelectorAll("input");
   let userAnswer;
@@ -93,13 +96,15 @@ function checkRightAnswer(correct_answer) {
       user_answers.push(userAnswer);
       storeResult();
       if (userAnswer !== correct_answer) {
-        input.parentElement.style.color = "#721c24";
-        input.parentElement.style.background = "#f8d7da";
-        input.parentElement.style.border = "10px solid #f5c6cb";
+        input.nextElementSibling.style.color = "#721c24";
+        input.nextElementSibling.style.background = "#f8d7da";
+        input.nextElementSibling.style.border = "1px solid #f5c6cb";
+        input.insertAdjacentHTML("afterend", crossIconTag);
       } else {
-        input.parentElement.style.color = "#155724";
-        input.parentElement.style.background = "#d4edda";
-        input.parentElement.style.border = "10px solid #c3e6cb";
+        input.nextElementSibling.style.color = "#155724";
+        input.nextElementSibling.style.background = "#d4edda";
+        input.nextElementSibling.style.border = "1px solid #c3e6cb";
+        input.insertAdjacentHTML("afterend", tickIconTag);
         correct++;
       }
     }
