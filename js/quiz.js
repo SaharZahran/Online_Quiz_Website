@@ -3,6 +3,9 @@ const question = document.querySelector(".question");
 const allAnswers = document.querySelector(".all-answers");
 const spans = document.querySelector(".spans");
 const container = document.querySelector(".quiz-container");
+const time_line = document.querySelector(".time_line");
+const timeText = document.querySelector(".timer .time_left_txt");
+const timeCount = document.querySelector(".timer .timer_sec");
 const results = document.querySelector(".results");
 let userAnswer;
 let numOfQuestion = 0;
@@ -48,6 +51,8 @@ submit_Button.addEventListener("click", () => {
       console.log(user_answers);
       console.log(right_answers);
     }
+    clearInterval(counter);
+    startTimer(15);
   }, 700);
 });
 
@@ -124,6 +129,34 @@ function storeResult() {
   localStorage.setItem("right-answers", right_answers);
 }
 
+function startTimer(time) {
+  counter = setInterval(timer, 1000);
+  function timer() {
+    timeCount.textContent = time;
+    time--;
+    if (time < 9) {
+      let addZero = timeCount.textContent;
+      timeCount.textContent = "0" + addZero; //add a 0 before time value
+    }
+    if (time < 0) {
+      clearInterval(counter); //clear counter
+      timeText.textContent = "Time Off";
+    }
+  }
+}
+startTimer(15);
+function startTimerLine(time) {
+  counterLine = setInterval(timer, 29);
+  function timer() {
+    time += 1; //upgrading time value with 1
+    time_line.style.width = time + "px"; //increasing width of time_line with px by time value
+    if (time > 549) {
+      //if time value is greater than 549
+      clearInterval(counterLine); //clear counterLine
+    }
+  }
+}
+startTimerLine(15);
 // fetch(
 //   "https://raw.githubusercontent.com/SaharZahran/Online_Quiz_Website/main/quiz_questions.json"
 // )
