@@ -27,6 +27,12 @@ body {
   padding: 2rem 2rem 0;
 }
 
+@media (max-width: 800px) {
+  .quiz-container {
+    width: 90%;
+  }
+}
+
 .quiz-container .quiz-info {
   display: flex;
   background-color: #fff;
