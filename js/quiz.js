@@ -13,9 +13,9 @@ let right_answers = [];
 let options;
 let quiz_number = JSON.parse(localStorage.getItem("quiz_number"));
 const questionsNum = document.querySelector(".questionsNum");
-let number_of_passed_quizzes;
-let average_point;
-let number_of_all_user_quizzes;
+let number_of_passed_quizzes = 0;
+let average_point = 0;
+let number_of_all_user_quizzes = 0;
 
 function loadQuestions(number) {
     if (number < 5) {
@@ -30,6 +30,8 @@ function loadQuestions(number) {
 
                 right_answer = data[quiz_number][number].right_answer;
             });
+    } else {
+        calculation()
     }
 }
 loadQuestions(numOfQuestion);
@@ -44,18 +46,9 @@ submit_Button.addEventListener("click", () => {
             const result = document.createElement("p");
             result.innerHTML = `Your score is:${correct} / 5`;
             container.appendChild(result);
-        } else {
-            if (correct >= 3) {
-                number_of_passed_quizzes++;
-                number_of_all_user_quizzes++;
-            } else {
-                number_of_all_user_quizzes++;
-            }
-            if (localStorage.getItem('number_of_passed_quizzes') !== null && localStorage.getItem('number_of_all_user_quizzes')) {
-                average_point = (correct / 5) * 100 + `%`;
-            }
-        }
+        } else {}
     }, 700);
+
 });
 
 function createBullets(numOfQuestion) {
@@ -72,7 +65,6 @@ function addQuestion(arrayOfOptions, number_of_question) {
     const questionText = document.createElement("h2");
     questionText.textContent = number_of_question;
     question.appendChild(questionText);
-
 
     for (let i = 0; i <= 3; i++) {
         const answer = document.createElement("div");
@@ -91,6 +83,9 @@ function addQuestion(arrayOfOptions, number_of_question) {
     }
 }
 
+let tickIconTag = '<div class="icon tick"><i class="fas fa-check"></i></div>';
+let crossIconTag = '<div class="icon cross"><i class="fas fa-times"></i></div>';
+
 function checkRightAnswer(correct_answer) {
     const inputAnswers = document.querySelectorAll("input");
     let userAnswer;
@@ -101,9 +96,15 @@ function checkRightAnswer(correct_answer) {
             user_answers.push(userAnswer);
             storeResult();
             if (userAnswer !== correct_answer) {
-                input.parentElement.style.background = "rgba(255, 0, 0, 0.582)";
+                input.nextElementSibling.style.color = "#721c24";
+                input.nextElementSibling.style.background = "#f8d7da";
+                input.nextElementSibling.style.border = "1px solid #f5c6cb";
+                input.insertAdjacentHTML("afterend", crossIconTag);
             } else {
-                input.parentElement.style.background = "rgba(0, 0, 255, 0.521)";
+                input.nextElementSibling.style.color = "#155724";
+                input.nextElementSibling.style.background = "#d4edda";
+                input.nextElementSibling.style.border = "1px solid #c3e6cb";
+                input.insertAdjacentHTML("afterend", tickIconTag);
                 correct++;
             }
         }
@@ -123,11 +124,20 @@ function storeResult() {
     localStorage.setItem("right-answers", right_answers);
 }
 
-function countPassedQuizzes() {
-    const userAnswers = localStorage.getItem("user-answers");
-    const rightAnswers = localStorage.getItem('right-answers');
-    console.log(userAnswers);
-    console.log(rightAnswers);
-
+function calculation() {
+    if (correct >= 3 && localStorage.getItem('number_of_passed_quizzes') === null) {
+        number_of_passed_quizzes++;
+        localStorage.setItem('number_of_passed_quizzes', number_of_passed_quizzes);
+    } else if (correct >= 3 && localStorage.getItem('number_of_passed_quizzes') !== null) {
+        let container = localStorage.getItem('number_of_passed_quizzes');
+        console.log(parse(container));
+        localStorage.setItem('number_of_passed_quizzes', parse(container) + 1);
+    }
+    number_of_all_user_quizzes++;
+    average_point = (number_of_passed_quizzes / number_of_all_user_quizzes) * 100;
+    localStorage.setItem('number_of_all_user_quizzes', number_of_all_user_quizzes);
+    localStorage.setItem('average_point', average_point);
+    console.log(number_of_passed_quizzes);
+    console.log(number_of_all_user_quizzes);
+    console.log(average_point);
 }
-countPassedQuizzes();
