@@ -1,20 +1,17 @@
 let Email = document.getElementById('Email');
-        let Password = document.getElementById('Password');
-        let btn = document.getElementById('btn');
-        let check = document.querySelectorAll('.check');
+let Password = document.getElementById('Password');
+let btn = document.getElementById('btn');
+let check = document.querySelectorAll('.check');
 
-        btn.addEventListener('click', (e) => {
-            let currentemail = Email.value;
-            console.log(currentemail);
-            let currentpassword = Password.value;
-            console.log(currentpassword);
-            
-            if(currentemail === localStorage.getItem('email') && currentpassword === localStorage.getItem('password')){
-                window.open("index.html");
-            }else{
-                check[1].innerText = 'Please Confirm Password';
-            }
-        });
+btn.addEventListener('click', (e) => {
+    let currentemail = Email.value;
+    console.log(currentemail);
+    let currentpassword = Password.value;
+    console.log(currentpassword);
 
-        localStorage.setItem('email' , 'sara_hab@yahoo.com');
-        localStorage.setItem('password', '12345');
+    if (currentemail === localStorage.getItem('email') && currentpassword === localStorage.getItem('password')) {
+        window.open("dashboard.html");
+    } else {
+        check[1].innerText = 'Please Confirm Password';
+    }
+});
