@@ -1,0 +1,49 @@
+*{
+ box-sizing: border-box;   
+}
+
+body{
+    background-color: antiquewhite;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+#form-info{
+    width: 600px;
+}
+
+.email{
+    display: flex;
+    flex-direction: column;
+}
+
+.full-name{
+    display: flex;
+    flex-direction: column;
+}
+
+.password{
+    display: flex;
+    flex-direction: column;
+}
+
+.confirm-password{
+    display: flex;
+    flex-direction: column;
+}
+
+.avatar {
+    vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+  .signIn-button{
+    background-color: aquamarine;
+    border:none;
+    border-radius: 15px;
+    font-size: 20px;
+    padding: 10px;
+    width: 50%;
+  }

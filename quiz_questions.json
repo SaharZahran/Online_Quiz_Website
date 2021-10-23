@@ -217,5 +217,57 @@
             ],
             "right_answer": "80% Water"
         }
+    ],
+    "Quiz5": [{
+            "Question": "In which decade was the American Institute of Electrical Engineers (AIEE) founded?",
+            "options": [
+                "1850s",
+                "1880s",
+                "1930s",
+                "1950s"
+            ],
+            "right_answer": "1880s"
+        },
+        {
+            "Question": "What is part of a database that holds only one type of information ? ",
+            "options": [
+                "Report",
+                "Field",
+                "Record",
+                "File"
+            ],
+            "right_answer": "Field"
+        },
+        {
+            "Question": "In which decade with the first transatlantic radio broadcast occur ? ",
+            "options": [
+                "1850s",
+                "1860s",
+                "1870s",
+                "1900s"
+            ],
+            "right_answer": "1900s"
+        },
+        {
+            "Question": "'OS'computer abbreviation usually means ? ",
+            "options": [
+                "Order of Significance",
+                "Open Software",
+                "Operating System",
+                "Optical Sensor"
+            ],
+            "right_answer": "88 pounds"
+        },
+        {
+            "Question": "'.MOV'extension refers usually to what kind of file ? ",
+            "options": [
+                "Image file",
+                "Animation/movie file",
+                "Audio file",
+                "MS Office document"
+
+            ],
+            "right_answer": "Animation/movie file"
+        }
     ]
 }
