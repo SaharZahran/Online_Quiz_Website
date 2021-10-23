@@ -15,6 +15,9 @@ body {
   color: #fff;
   background: #007bff;
 }
+.question {
+  border-top: 3px solid #007bff;
+}
 
 .quiz-container {
   margin: 3rem auto;
@@ -27,7 +30,7 @@ body {
 .quiz-container .quiz-info {
   display: flex;
   background-color: #fff;
-  padding: 1rem;
+  padding: 1rem 1rem 0;
   justify-content: space-between;
 }
 
@@ -61,6 +64,18 @@ label {
 
 input:checked + label {
   background-color: #cce5ff;
+}
+
+.quiz-container .all-answers .answer label.correct {
+  color: #155724;
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+}
+
+.quiz-container .all-answers .answer label.incorrect {
+  color: #721c24;
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
 }
 
 .quiz-container .all-answers .answer:hover {
