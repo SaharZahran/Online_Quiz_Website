@@ -6,6 +6,9 @@ const container = document.querySelector(".quiz-container");
 const time_line = document.querySelector(".time_line");
 const timeText = document.querySelector(".timer .time_left_txt");
 const timeCount = document.querySelector(".timer .timer_sec");
+const input = document.querySelectorAll("input");
+const quizName = document.querySelector(".quiz-name");
+
 let userAnswer;
 let numOfQuestion = 0;
 let right_answer;
@@ -21,11 +24,10 @@ let number_of_all_user_quizzes = 0;
 
 function loadQuestions(number) {
   if (number < 5) {
-    fetch(
-      "https://raw.githubusercontent.com/SaharZahran/Online_Quiz_Website/main/quiz_questions.json"
-    )
+    fetch("../quiz_questions.json")
       .then((response) => response.json())
       .then((data) => {
+        quizName.innerHTML = data[quiz_number][0].name;
         console.log(data[quiz_number].length);
         options = data[quiz_number][number].options;
         console.log(options);
@@ -47,20 +49,19 @@ submit_Button.addEventListener("click", () => {
     loadQuestions(numOfQuestion);
     if (numOfQuestion > 4) {
       container.innerHTML = "";
-      fetch(
-        "https://raw.githubusercontent.com/SaharZahran/Online_Quiz_Website/main/quiz_questions.json"
-      )
+      fetch("../quiz_questions.json")
         .then((response) => response.json())
         .then((data) => {
           let counterResult = 0;
+          let quizName = `<h1>${data[quiz_number][counterResult].name}</h1>`;
+          container.insertAdjacentHTML("beforeend", quizName);
           for (let i = 0; i < data[quiz_number].length; i++) {
-            let questionResult = `<h3>${data[quiz_number][counterResult]["Question"]}</h3>`;
+            let questionResult = `</br></br><h3>${data[quiz_number][counterResult]["Question"]}</h3></br>`;
             container.insertAdjacentHTML("beforeend", questionResult);
             counterResult++;
             for (let j = 0; j < data[quiz_number][i].options.length; j++) {
-              let answernResult = `<div class="answer ${trueAns(
-                data[quiz_number].length
-              )}"><input class="inputRadio" type="radio"><label>${
+              let answernResult = `<div class="answer ${trueAns(j)}">
+              <input class="inputRadio" type="radio"><label>${
                 data[quiz_number][i].options[j]
               }</label></div>`;
               container.insertAdjacentHTML("beforeend", answernResult);
@@ -73,17 +74,13 @@ submit_Button.addEventListener("click", () => {
   }, 700);
 });
 
-function trueAns(len) {
-  console.log(localStorage);
-  for (i = 0; i < len; i++) {
-    console.log(localStorage.getItem("right-answers"));
-    localStorage.getItem("user-answers").split(",")[i] ==
-    localStorage.getItem("right-answers").split(",")[i]
-      ? "correct"
-      : "";
-  }
+function trueAns(index) {
+  // console.log(localStorage.getItem("right-answers"));
+  return localStorage.getItem("user-answers").split(",")[index] ==
+    localStorage.getItem("right-answers").split(",")[index]
+    ? "correct"
+    : "";
 }
-trueAns();
 // localStorage.clear();
 
 function createBullets(numOfQuestion) {
@@ -200,6 +197,7 @@ function startTimer(time) {
     if (time < 0) {
       clearInterval(counter); //clear counter
       timeText.textContent = "Time Off";
+      input;
     }
   }
 }

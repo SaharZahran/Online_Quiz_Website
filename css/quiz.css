@@ -69,6 +69,10 @@ input:checked + label {
   background-color: #cce5ff;
 }
 
+input.disabled {
+  pointer-events: none;
+}
+
 .answer:hover {
   color: #004085;
   background: #cce5ff;
