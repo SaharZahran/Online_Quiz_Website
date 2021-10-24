@@ -6,7 +6,6 @@ const container = document.querySelector(".quiz-container");
 const time_line = document.querySelector(".time_line");
 const timeText = document.querySelector(".timer .time_left_txt");
 const timeCount = document.querySelector(".timer .timer_sec");
-const results = document.querySelector(".results");
 let userAnswer;
 let numOfQuestion = 0;
 let right_answer;
@@ -40,22 +39,42 @@ function loadQuestions(number) {
 loadQuestions(numOfQuestion);
 submit_Button.addEventListener("click", () => {
 
-
     checkRightAnswer(right_answer);
     setTimeout(() => {
+        console.log(numOfQuestion);
         numOfQuestion++;
         reset();
         loadQuestions(numOfQuestion);
         if (numOfQuestion > 4) {
             container.innerHTML = "";
-            const result = document.createElement("p");
-            result.innerHTML = `Your score is:${correct} / 5`;
-            container.appendChild(result);
+            fetch(
+                    "https://raw.githubusercontent.com/SaharZahran/Online_Quiz_Website/main/quiz_questions.json"
+                )
+                .then((response) => response.json())
+                .then((data) => {
+                    let counterResult = 0;
+                    for (let i = 0; i < data[quiz_number].length; i++) {
+                        let questionResult = `<h3>${data[quiz_number][counterResult]["Question"]}</h3>`;
+                        container.insertAdjacentHTML("beforeend", questionResult);
+                        counterResult++;
+                        for (let j = 0; j < data[quiz_number][i].options.length; j++) {
+                            let answernResult = `<div class="answer ${trueAns()}"><input class="inputRadio" type="radio"><label>${
+                data[quiz_number][i].options[j]
+              }</label></div>`;
+                            container.insertAdjacentHTML("beforeend", answernResult);
+                        }
+                    }
+                });
         }
         clearInterval(counter);
         startTimer(15);
     }, 700);
 });
+
+function trueAns() {
+    console.log(localStorage.getItem("user-answers"));
+}
+trueAns();
 
 function createBullets(numOfQuestion) {
     for (let i = 0; i <= 4; i++) {
