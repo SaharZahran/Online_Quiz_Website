@@ -48,12 +48,6 @@ submit_Button.addEventListener("click", () => {
     loadQuestions(numOfQuestion);
     if (numOfQuestion > 4) {
       container.innerHTML = "";
-      const resultDiv = document.createElement("div");
-      // resultDiv.innerHTML = `Your score is:${correct} / 5`;
-      // container.appendChild(resultDiv);
-      // function result(data)
-      // console.log(user_answers);
-      // console.log(right_answers);
       fetch(
         "https://raw.githubusercontent.com/SaharZahran/Online_Quiz_Website/main/quiz_questions.json"
       )
@@ -61,13 +55,12 @@ submit_Button.addEventListener("click", () => {
         .then((data) => {
           let counterResult = 0;
 
-          for (let i = 0; i < 5; i++) {
-            let questionResult = `<h3>${data[quiz_number][counterResult].Question}</h3>`;
+          for (let i = 0; i < data[quiz_number].length; i++) {
+            let questionResult = `<h3>${data[quiz_number][counterResult]["Question"]}</h3>`;
             container.insertAdjacentHTML("beforeend", questionResult);
-            for (let j = 0; j < 4; j++) {
+            counterResult++;
+            for (let j = 0; j < data[quiz_number][i].options.length; j++) {
               let answernResult = `<div>${data[quiz_number][i].options[j]}</div>`;
-              // console.log(data[quiz_number][i].Question);
-              counterResult++;
               container.insertAdjacentHTML("beforeend", answernResult);
             }
           }
