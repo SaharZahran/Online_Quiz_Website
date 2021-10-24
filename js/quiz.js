@@ -16,7 +16,9 @@ let right_answers = [];
 let options;
 let quiz_number = JSON.parse(localStorage.getItem("quiz_number"));
 const questionsNum = document.querySelector(".questionsNum");
-let end_iteration;
+let number_of_passed_quizzes = 0;
+let average_point = 0;
+let number_of_all_user_quizzes = 0;
 
 function loadQuestions(number) {
   if (number < 5) {
@@ -151,8 +153,36 @@ function storeResult() {
   localStorage.setItem("right-answers", right_answers);
 }
 
+function calculation() {
+  if (
+    correct >= 3 &&
+    localStorage.getItem("number_of_passed_quizzes") === null
+  ) {
+    number_of_passed_quizzes++;
+    localStorage.setItem("number_of_passed_quizzes", number_of_passed_quizzes);
+  } else if (
+    correct >= 3 &&
+    localStorage.getItem("number_of_passed_quizzes") !== null
+  ) {
+    let container = localStorage.getItem("number_of_passed_quizzes");
+    console.log(parse(container));
+    localStorage.setItem("number_of_passed_quizzes", parse(container) + 1);
+  }
+  number_of_all_user_quizzes++;
+  average_point = (number_of_passed_quizzes / number_of_all_user_quizzes) * 100;
+  localStorage.setItem(
+    "number_of_all_user_quizzes",
+    number_of_all_user_quizzes
+  );
+  localStorage.setItem("average_point", average_point);
+  console.log(number_of_passed_quizzes);
+  console.log(number_of_all_user_quizzes);
+  console.log(average_point);
+}
+
 function startTimer(time) {
   counter = setInterval(timer, 1000);
+
   function timer() {
     timeCount.textContent = time;
     time--;
@@ -167,8 +197,10 @@ function startTimer(time) {
   }
 }
 startTimer(15);
+
 function startTimerLine(time) {
   counterLine = setInterval(timer, 29);
+
   function timer() {
     time += 1; //upgrading time value with 1
     time_line.style.width = time + "px"; //increasing width of time_line with px by time value
@@ -179,19 +211,3 @@ function startTimerLine(time) {
   }
 }
 startTimerLine(15);
-// let fetchTxt = fetch(
-//   "https://raw.githubusercontent.com/SaharZahran/Online_Quiz_Website/main/quiz_questions.json"
-// )
-//   .then((response) => response.json())
-//   .then((data) => {
-//     console.log(data["Quiz1"]);
-// options = data[quiz_number][number].options;
-// console.log(options);
-// addQuestion(options, data[quiz_number][number].Question);
-// createBullets(number);
-
-// right_answer = data[quiz_number][number].right_answer;
-// console.log(right_answer);
-// });
-
-// results.insertAdjacentHTML("afterend", fetchTxt);
