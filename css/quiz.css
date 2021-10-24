@@ -15,9 +15,6 @@ body {
   color: #fff;
   background: #007bff;
 }
-.question {
-  border-top: 3px solid #007bff;
-}
 
 .quiz-container {
   margin: 3rem auto;
@@ -130,9 +127,7 @@ input:checked + label {
 }
 
 .time_line {
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
+  margin-top: 10px;
   height: 3px;
   background: #007bff;
 }
