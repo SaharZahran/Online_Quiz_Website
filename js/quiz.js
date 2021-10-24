@@ -54,7 +54,6 @@ submit_Button.addEventListener("click", () => {
         .then((response) => response.json())
         .then((data) => {
           let counterResult = 0;
-
           for (let i = 0; i < data[quiz_number].length; i++) {
             let questionResult = `<h3>${data[quiz_number][counterResult]["Question"]}</h3>`;
             container.insertAdjacentHTML("beforeend", questionResult);
@@ -67,8 +66,6 @@ submit_Button.addEventListener("click", () => {
         });
     }
     clearInterval(counter);
-    clearInterval(counterLine);
-    startTimerLine(15);
     startTimer(15);
   }, 700);
 });
@@ -190,17 +187,3 @@ function startTimer(time) {
   }
 }
 startTimer(15);
-
-function startTimerLine(time) {
-  counterLine = setInterval(timer, 29);
-
-  function timer() {
-    time += 1; //upgrading time value with 1
-    time_line.style.width = time + "px"; //increasing width of time_line with px by time value
-    if (time > 549) {
-      //if time value is greater than 549
-      clearInterval(counterLine); //clear counterLine
-    }
-  }
-}
-startTimerLine(15);
