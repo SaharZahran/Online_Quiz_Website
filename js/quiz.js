@@ -74,7 +74,9 @@ submit_Button.addEventListener("click", () => {
 });
 
 function trueAns(len) {
-    for (i = 0; i < 5; i++) {
+    console.log(localStorage);
+    for (i = 0; i < len; i++) {
+        console.log(localStorage.getItem("right-answers"));
         localStorage.getItem("user-answers").split(",")[i] ==
             localStorage.getItem("right-answers").split(",")[i] ?
             "correct" :
@@ -83,6 +85,7 @@ function trueAns(len) {
 }
 trueAns();
 // localStorage.clear();
+
 function createBullets(numOfQuestion) {
     for (let i = 0; i <= 4; i++) {
         const span = document.createElement("span");
