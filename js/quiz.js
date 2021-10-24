@@ -75,7 +75,7 @@ submit_Button.addEventListener("click", () => {
 
 function trueAns(len) {
   console.log(localStorage);
-  for (i = 0; i < 5; i++) {
+  for (i = 0; i < len; i++) {
     console.log(localStorage.getItem("right-answers"));
     localStorage.getItem("user-answers").split(",")[i] ==
     localStorage.getItem("right-answers").split(",")[i]
@@ -85,6 +85,7 @@ function trueAns(len) {
 }
 trueAns();
 // localStorage.clear();
+
 function createBullets(numOfQuestion) {
   for (let i = 0; i <= 4; i++) {
     const span = document.createElement("span");
@@ -203,17 +204,3 @@ function startTimer(time) {
   }
 }
 startTimer(15);
-
-function startTimerLine(time) {
-  counterLine = setInterval(timer, 29);
-
-  function timer() {
-    time += 1; //upgrading time value with 1
-    time_line.style.width = time + "px"; //increasing width of time_line with px by time value
-    if (time > 549) {
-      //if time value is greater than 549
-      clearInterval(counterLine); //clear counterLine
-    }
-  }
-}
-startTimerLine(15);
