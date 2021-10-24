@@ -131,16 +131,20 @@ function storeResult() {
 }
 
 
+let container;
+
 function calculation() {
     number_of_all_user_quizzes++;
     if (correct >= 3 && localStorage.getItem('number_of_passed_quizzes') === null) {
         number_of_passed_quizzes++;
         localStorage.setItem('number_of_passed_quizzes', number_of_passed_quizzes);
+        let container = 0;
     } else if (correct >= 3 && localStorage.getItem('number_of_passed_quizzes') !== null) {
         let container = parseInt(localStorage.getItem('number_of_passed_quizzes'));
         container += 1;
         localStorage.setItem('number_of_passed_quizzes', container);
     }
+
     average_point = (container / number_of_all_user_quizzes) * 100;
     localStorage.setItem('number_of_all_user_quizzes', number_of_all_user_quizzes);
     localStorage.setItem('average_point', average_point);
