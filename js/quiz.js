@@ -26,7 +26,7 @@ function loadQuestions(number) {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data[quiz_number][1].options.length);
+        console.log(data[quiz_number].length);
         options = data[quiz_number][number].options;
         console.log(options);
         addQuestion(options, data[quiz_number][number].Question);
@@ -58,7 +58,9 @@ submit_Button.addEventListener("click", () => {
             container.insertAdjacentHTML("beforeend", questionResult);
             counterResult++;
             for (let j = 0; j < data[quiz_number][i].options.length; j++) {
-              let answernResult = `<div class="answer ${trueAns()}"><input class="inputRadio" type="radio"><label>${
+              let answernResult = `<div class="answer ${trueAns(
+                data[quiz_number].length
+              )}"><input class="inputRadio" type="radio"><label>${
                 data[quiz_number][i].options[j]
               }</label></div>`;
               container.insertAdjacentHTML("beforeend", answernResult);
@@ -71,11 +73,18 @@ submit_Button.addEventListener("click", () => {
   }, 700);
 });
 
-function trueAns() {
-  console.log(localStorage.getItem("user-answers"));
+function trueAns(len) {
+  console.log(localStorage);
+  for (i = 0; i < 5; i++) {
+    console.log(localStorage.getItem("right-answers"));
+    localStorage.getItem("user-answers").split(",")[i] ==
+    localStorage.getItem("right-answers").split(",")[i]
+      ? "correct"
+      : "";
+  }
 }
 trueAns();
-
+// localStorage.clear();
 function createBullets(numOfQuestion) {
   for (let i = 0; i <= 4; i++) {
     const span = document.createElement("span");
