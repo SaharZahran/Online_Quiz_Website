@@ -24,8 +24,7 @@
                 "Uranus",
                 "Mars",
                 "Venus",
-                "Jupiter",
-                "Mars"
+                "Jupiter"
             ],
             "right_answer": "Mars"
         },
@@ -35,8 +34,7 @@
                 "1 minute",
                 "8 minutes",
                 "Instantaneous",
-                "24 hours",
-                "8 minutes"
+                "24 hours"
             ],
             "right_answer": "8 minutes"
         }, {
@@ -45,8 +43,7 @@
                 "5000 years",
                 "5 million years",
                 "5 billion years",
-                "500 billion years",
-                "5 billion years"
+                "500 billion years"
 
             ],
             "right_answer": "5 billion years"
