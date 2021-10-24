@@ -24,7 +24,9 @@ let number_of_all_user_quizzes = 0;
 
 function loadQuestions(number) {
   if (number < 5) {
-    fetch("../quiz_questions.json")
+    fetch(
+      "https://raw.githubusercontent.com/SaharZahran/Online_Quiz_Website/main/quiz_questions.json"
+    )
       .then((response) => response.json())
       .then((data) => {
         quizName.innerHTML = data[quiz_number][0].name;
@@ -49,11 +51,13 @@ submit_Button.addEventListener("click", () => {
     loadQuestions(numOfQuestion);
     if (numOfQuestion > 4) {
       container.innerHTML = "";
-      fetch("../quiz_questions.json")
+      fetch(
+        "https://raw.githubusercontent.com/SaharZahran/Online_Quiz_Website/main/quiz_questions.json"
+      )
         .then((response) => response.json())
         .then((data) => {
           let counterResult = 0;
-          let quizName = `<h1>${data[quiz_number][counterResult].name}</h1>`;
+          let quizName = `<h1>${data[quiz_number][0].name}</h1>`;
           container.insertAdjacentHTML("beforeend", quizName);
           for (let i = 0; i < data[quiz_number].length; i++) {
             let questionResult = `</br></br><h3>${data[quiz_number][counterResult]["Question"]}</h3></br>`;
@@ -203,17 +207,3 @@ function startTimer(time) {
   }
 }
 startTimer(15);
-
-function startTimerLine(time) {
-  counterLine = setInterval(timer, 29);
-
-  function timer() {
-    time += 1; //upgrading time value with 1
-    time_line.style.width = time + "px"; //increasing width of time_line with px by time value
-    if (time > 549) {
-      //if time value is greater than 549
-      clearInterval(counterLine); //clear counterLine
-    }
-  }
-}
-startTimerLine(15);
