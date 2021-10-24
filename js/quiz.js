@@ -25,6 +25,7 @@ function loadQuestions(number) {
     )
       .then((response) => response.json())
       .then((data) => {
+        console.log(data[quiz_number][1].options.length);
         options = data[quiz_number][number].options;
         console.log(options);
         addQuestion(options, data[quiz_number][number].Question);
@@ -45,13 +46,34 @@ submit_Button.addEventListener("click", () => {
     loadQuestions(numOfQuestion);
     if (numOfQuestion > 4) {
       container.innerHTML = "";
-      const result = document.createElement("p");
-      result.innerHTML = `Your score is:${correct} / 5`;
-      container.appendChild(result);
-      console.log(user_answers);
-      console.log(right_answers);
+      const resultDiv = document.createElement("div");
+      // resultDiv.innerHTML = `Your score is:${correct} / 5`;
+      // container.appendChild(resultDiv);
+      // function result(data)
+      // console.log(user_answers);
+      // console.log(right_answers);
+      fetch(
+        "https://raw.githubusercontent.com/SaharZahran/Online_Quiz_Website/main/quiz_questions.json"
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          let counterResult = 0;
+
+          for (let i = 0; i < 5; i++) {
+            let questionResult = `<h3>${data[quiz_number][counterResult].Question}</h3>`;
+            container.insertAdjacentHTML("beforeend", questionResult);
+            for (let j = 0; j < 4; j++) {
+              let answernResult = `<div>${data[quiz_number][i].options[j]}</div>`;
+              // console.log(data[quiz_number][i].Question);
+              counterResult++;
+              container.insertAdjacentHTML("beforeend", answernResult);
+            }
+          }
+        });
     }
     clearInterval(counter);
+    clearInterval(counterLine);
+    startTimerLine(15);
     startTimer(15);
   }, 700);
 });
@@ -157,17 +179,19 @@ function startTimerLine(time) {
   }
 }
 startTimerLine(15);
-// fetch(
+// let fetchTxt = fetch(
 //   "https://raw.githubusercontent.com/SaharZahran/Online_Quiz_Website/main/quiz_questions.json"
 // )
 //   .then((response) => response.json())
 //   .then((data) => {
 //     console.log(data["Quiz1"]);
-//     options = data[quiz_number][number].options;
-//     console.log(options);
-//     addQuestion(options, data[quiz_number][number].Question);
-//     createBullets(number);
+// options = data[quiz_number][number].options;
+// console.log(options);
+// addQuestion(options, data[quiz_number][number].Question);
+// createBullets(number);
 
-//     right_answer = data[quiz_number][number].right_answer;
-//     console.log(right_answer);
-//   });
+// right_answer = data[quiz_number][number].right_answer;
+// console.log(right_answer);
+// });
+
+// results.insertAdjacentHTML("afterend", fetchTxt);
