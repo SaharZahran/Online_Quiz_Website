@@ -6,7 +6,6 @@ const container = document.querySelector(".quiz-container");
 const time_line = document.querySelector(".time_line");
 const timeText = document.querySelector(".timer .time_left_txt");
 const timeCount = document.querySelector(".timer .timer_sec");
-const results = document.querySelector(".results");
 let userAnswer;
 let numOfQuestion = 0;
 let right_answer;
@@ -59,7 +58,9 @@ submit_Button.addEventListener("click", () => {
             container.insertAdjacentHTML("beforeend", questionResult);
             counterResult++;
             for (let j = 0; j < data[quiz_number][i].options.length; j++) {
-              let answernResult = `<div>${data[quiz_number][i].options[j]}</div>`;
+              let answernResult = `<div class="answer ${trueAns()}"><input class="inputRadio" type="radio"><label>${
+                data[quiz_number][i].options[j]
+              }</label></div>`;
               container.insertAdjacentHTML("beforeend", answernResult);
             }
           }
@@ -69,6 +70,11 @@ submit_Button.addEventListener("click", () => {
     startTimer(15);
   }, 700);
 });
+
+function trueAns() {
+  console.log(localStorage.getItem("user-answers"));
+}
+trueAns();
 
 function createBullets(numOfQuestion) {
   for (let i = 0; i <= 4; i++) {
