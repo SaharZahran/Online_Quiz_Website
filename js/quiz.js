@@ -39,22 +39,10 @@ function loadQuestions(number) {
 }
 loadQuestions(numOfQuestion);
 submit_Button.addEventListener("click", () => {
-    checkRightAnswer(right_answer);
-    setTimeout(() => {
-        numOfQuestion++;
-        reset();
-        loadQuestions(numOfQuestion);
-        if (numOfQuestion > 4) {
-            container.innerHTML = "";
-            const result = document.createElement("p");
-            result.innerHTML = `Your score is:${correct} / 5`;
-            container.appendChild(result);
-        } else {}
-    }, 700);
+
 
     checkRightAnswer(right_answer);
     setTimeout(() => {
-        console.log(numOfQuestion);
         numOfQuestion++;
         reset();
         loadQuestions(numOfQuestion);
@@ -63,8 +51,6 @@ submit_Button.addEventListener("click", () => {
             const result = document.createElement("p");
             result.innerHTML = `Your score is:${correct} / 5`;
             container.appendChild(result);
-            console.log(user_answers);
-            console.log(right_answers);
         }
         clearInterval(counter);
         startTimer(15);
@@ -146,21 +132,18 @@ function storeResult() {
 
 
 function calculation() {
+    number_of_all_user_quizzes++;
     if (correct >= 3 && localStorage.getItem('number_of_passed_quizzes') === null) {
         number_of_passed_quizzes++;
         localStorage.setItem('number_of_passed_quizzes', number_of_passed_quizzes);
     } else if (correct >= 3 && localStorage.getItem('number_of_passed_quizzes') !== null) {
-        let container = localStorage.getItem('number_of_passed_quizzes');
-        console.log(parse(container));
-        localStorage.setItem('number_of_passed_quizzes', parse(container) + 1);
+        let container = parseInt(localStorage.getItem('number_of_passed_quizzes'));
+        container += 1;
+        localStorage.setItem('number_of_passed_quizzes', container);
     }
-    number_of_all_user_quizzes++;
-    average_point = (number_of_passed_quizzes / number_of_all_user_quizzes) * 100;
+    average_point = (container / number_of_all_user_quizzes) * 100;
     localStorage.setItem('number_of_all_user_quizzes', number_of_all_user_quizzes);
     localStorage.setItem('average_point', average_point);
-    console.log(number_of_passed_quizzes);
-    console.log(number_of_all_user_quizzes);
-    console.log(average_point);
 }
 
 function startTimer(time) {
