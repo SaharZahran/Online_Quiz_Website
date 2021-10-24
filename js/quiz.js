@@ -159,6 +159,7 @@ function storeResult() {
 }
 
 function calculation() {
+  number_of_all_user_quizzes++;
   if (
     correct >= 3 &&
     localStorage.getItem("number_of_passed_quizzes") === null
@@ -169,20 +170,20 @@ function calculation() {
     correct >= 3 &&
     localStorage.getItem("number_of_passed_quizzes") !== null
   ) {
-    let container = localStorage.getItem("number_of_passed_quizzes");
-    console.log(parse(container));
-    localStorage.setItem("number_of_passed_quizzes", parse(container) + 1);
+    let container = parseInt(localStorage.getItem("number_of_passed_quizzes"));
+    container += 1;
+    localStorage.setItem("number_of_passed_quizzes", container);
   }
-  number_of_all_user_quizzes++;
-  average_point = (number_of_passed_quizzes / number_of_all_user_quizzes) * 100;
+  if (localStorage.getItem("number_of_passed_quizzes") === null) {
+    container = 1;
+  }
+  console.log(container);
+  average_point = (container / number_of_all_user_quizzes) * 100;
   localStorage.setItem(
     "number_of_all_user_quizzes",
     number_of_all_user_quizzes
   );
   localStorage.setItem("average_point", average_point);
-  console.log(number_of_passed_quizzes);
-  console.log(number_of_all_user_quizzes);
-  console.log(average_point);
 }
 
 function startTimer(time) {
@@ -202,3 +203,17 @@ function startTimer(time) {
   }
 }
 startTimer(15);
+
+function startTimerLine(time) {
+  counterLine = setInterval(timer, 29);
+
+  function timer() {
+    time += 1; //upgrading time value with 1
+    time_line.style.width = time + "px"; //increasing width of time_line with px by time value
+    if (time > 549) {
+      //if time value is greater than 549
+      clearInterval(counterLine); //clear counterLine
+    }
+  }
+}
+startTimerLine(15);
