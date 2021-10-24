@@ -1,6 +1,6 @@
 const start_btns = document.querySelectorAll('.start-btn');
 const profileImage = document.getElementById('profile');
-
+const username = document.getElementById('username');
 let number_of_quiz;
 start_btns.forEach((btn, index) => {
     btn.addEventListener('click', () => {
@@ -14,3 +14,4 @@ start_btns.forEach((btn, index) => {
     })
 })
 profileImage.src = localStorage.getItem('userAvatar');
+username.innerHTML = localStorage.getItem('name');
