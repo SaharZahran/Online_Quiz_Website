@@ -1,0 +1,107 @@
+  
+      <!-- Start Greeting -->
+      <section class="dashboard " >
+      <div class="page-header">
+         <div class="container py-5">
+            <div class="greeting">
+               <div class="userImg" id="profileImg">
+                  <img src="img/img_placeholder.png" alt="profile image" />
+               </div>
+               <div class="d-flex">Hi <span id="username">Maya</span>!</div>
+               <div>Welcome back</div>
+               <div class="col-md-8 fs-4 user_quizzes_details">
+                  <div id="quizzesPassed"><span>3</span> <br />Quizzes Passed</div>
+                  <div id="averagePoint"><span>70%</span> <br />Average Point</div>
+               </div>
+            </div>
+         </div>
+      </div>
+      </div>
+      <!-- End Greeting -->
+      <!-- Start Popular Section -->
+      <div class="p-5 mb-4 rounded-3 popular_quizzes">
+         <div class="container-fluid py-5">
+            <h1 class="display-5 fw-bold">Quizzes</h1>
+            <p class="fs-4">Test Your Knowledge</p>
+         </div>
+      </div>
+      <!-- End Popular Section -->
+      <!-- Start All-Quizzes Section -->
+      <section class="all_quizzes">
+         <div class="card quiz" style="width: 22rem">
+            <img src="img/img_placeholder.png" class="card-img-top" alt="quiz_photo" id="quizImg1" />
+            <div class="card-body">
+               <h5 class="card-title" id="quizTitle1">Solar System</h5>
+               <div class="quiz_details">
+                  <div id="numQuestion1">
+                     <i class="fas fa-book-open"></i> 5 Questions
+                  </div>
+                  <div id="numDuration1"><i class="fas fa-clock"></i> 10 Minutes</div>
+                  <a href="quiz.html" class="btn btn-primary start-btn" id="quizStart1">Start</a>
+               </div>
+            </div>
+         </div>
+         <div class="card quiz" style="width: 22rem">
+            <img src="img/img_placeholder.png" class="card-img-top" alt="quiz_photo" id="quizImg2" />
+            <div class="card-body">
+               <h5 class="card-title" id="quizTitle2">Front-end</h5>
+               <div class="quiz_details">
+                  <div id="numQuestion2">
+                     <i class="fas fa-book-open"> </i> 5 Questions
+                  </div>
+                  <div id="numDuration2"><i class="fas fa-clock"></i> 10 Minutes</div>
+                  <a href="quiz.html" class="btn btn-primary start-btn" id="quizStart2">Start</a>
+               </div>
+            </div>
+         </div>
+         <div class="card quiz" style="width: 22rem">
+            <img src="img/img_placeholder.png" class="card-img-top" alt="quiz_photo" id="quizImg3" />
+            <div class="card-body">
+               <h5 class="card-title" id="quizTitle3">Geography</h5>
+               <div class="quiz_details">
+                  <div id="numQuestion3">
+                     <i class="fas fa-book-open"></i> 5 Questions
+                  </div>
+                  <div id="numDuration3"><i class="fas fa-clock"></i> 10 Minutes</div>
+                  <a href="quiz.html" class="btn btn-primary start-btn" id="quizStart3">Start</a>
+               </div>
+            </div>
+         </div>
+         <div class="card quiz" style="width: 22rem">
+            <img src="img/img_placeholder.png" class="card-img-top" alt="quiz_photo" id="quizImg4" />
+            <div class="card-body">
+               <h5 class="card-title" id="quizTitle4">Human Body<span></span></h5>
+               <div class="quiz_details">
+                  <div id="numQuestion4">
+                     <i class="fas fa-book-open"></i> 5 Questions
+                  </div>
+                  <div id="numDuration4"><i class="fas fa-clock"></i> 10 Minutes</div>
+                  <a href="quiz.html" class="btn btn-primary start-btn" id="quizStart4">Start</a>
+               </div>
+            </div>
+         </div>
+         <div class="card quiz" style="width: 22rem">
+            <img src="img/img_placeholder.png" class="card-img-top" alt="quiz_photo" id="quizImg5" />
+            <div class="card-body">
+               <h5 class="card-title" id="quizTitle5">
+                  Information about technology<span></span>
+               </h5>
+               <div class="quiz_details">
+                  <div id="numQuestion5">
+                     <i class="fas fa-book-open"></i> 5 Questions
+                  </div>
+                  <div id="numDuration5"><i class="fas fa-clock"></i> 10 Minutes</div>
+                  <a href="quiz.html" class="btn btn-primary start-btn" id="quizStart5">Start</a>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- End All-Quizzes Section -->
+      <!-- Start Footer -->
+      <footer class="fs-3">
+         <p>All Rights Reserved @2021 Turtles.com</p>
+      </footer>
+      <!-- End Footer -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+      <script src="js/dashboard.js"></script>
+   </body>
