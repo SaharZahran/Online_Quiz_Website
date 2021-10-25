@@ -181,10 +181,10 @@ function checkRightAnswer(correct_answer) {
   } ${correct}/5`;
   if (correct >= 3) {
     score_text.style.color = "green";
-    result_img.src = "../img/good.jpg";
+    result_img.src = "./img/good.jpg";
   } else {
     score_text.style.color = "red";
-    result_img.src = "../img/bad.jpg";
+    result_img.src = "./img/bad.jpg";
   }
 }
 
