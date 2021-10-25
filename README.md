@@ -31,6 +31,3 @@ An updated version of any Browser connected to an internet connection only needs
 
 ## Trello
 https://trello.com/b/FJP44Z78/online-quiz-website
-
-## Live Page
-https://saharzahran.github.io/Online_Quiz_Website/

@@ -1,12 +1,23 @@
-const submit_Button = document.querySelector(".next");
+const submit_Button = document.querySelector(".submit-btn");
 const question = document.querySelector(".question");
-const allAnswers = document.querySelector(".answers");
+const allAnswers = document.querySelector(".all-answers");
 const spans = document.querySelector(".spans");
 const container = document.querySelector(".quiz-container");
-const time_line = document.querySelector(".progress-bar");
-const timeText = document.querySelector(".timer .time_left_txt");
-const timeCount = document.querySelector(".timer");
+const timeText = document.querySelector(".time_left_txt");
+const timeCount = document.querySelector(".timer_sec");
+const input = document.querySelectorAll("input");
+const quizName = document.querySelector(".quiz-name");
+const info_box = document.querySelector(".info_box");
+const continue_btn = info_box.querySelector(".buttons .restart");
+const Show_Answer = document.querySelector(".Show_Answer");
+const result_box = document.querySelector(".result_box");
+const score_text = document.querySelector(".score_text");
+const result = document.querySelector(".result");
+const time_line = document.querySelector(".time_line");
+const result_img = document.querySelector(".result_img");
+const total = document.querySelector(".total");
 
+let largeDiv = document.createElement("div");
 let userAnswer;
 let numOfQuestion = 0;
 let right_answer;
@@ -20,6 +31,18 @@ let number_of_passed_quizzes = 0;
 let average_point = 0;
 let number_of_all_user_quizzes = 0;
 
+continue_btn.addEventListener("click", () => {
+  info_box.classList.remove("activeInfo");
+  container.classList.add("active");
+  startTimer(15);
+  startTimerLine(15);
+});
+
+Show_Answer.addEventListener("click", () => {
+  result_box.classList.remove("activeResult");
+  container.classList.add("active");
+});
+
 function loadQuestions(number) {
   if (number < 5) {
     fetch(
@@ -27,14 +50,12 @@ function loadQuestions(number) {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data[quiz_number][1].options.length);
+        quizName.innerHTML = data[quiz_number][0].name;
+
         options = data[quiz_number][number].options;
-        console.log(options);
         addQuestion(options, data[quiz_number][number].Question);
         createBullets(number);
-
         right_answer = data[quiz_number][number].right_answer;
-        console.log(right_answer);
       });
   }
 }
@@ -42,33 +63,23 @@ loadQuestions(numOfQuestion);
 submit_Button.addEventListener("click", () => {
   checkRightAnswer(right_answer);
   setTimeout(() => {
-    console.log(numOfQuestion);
     numOfQuestion++;
     reset();
     loadQuestions(numOfQuestion);
     if (numOfQuestion > 4) {
-      container.innerHTML = "";
-      fetch(
-        "https://raw.githubusercontent.com/SaharZahran/Online_Quiz_Website/main/quiz_questions.json"
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          let counterResult = 0;
-          for (let i = 0; i < data[quiz_number].length; i++) {
-            let questionResult = `<h3>${data[quiz_number][counterResult]["Question"]}</h3>`;
-            container.insertAdjacentHTML("beforeend", questionResult);
-            counterResult++;
-            for (let j = 0; j < data[quiz_number][i].options.length; j++) {
-              let answernResult = `<div>${data[quiz_number][i].options[j]}</div>`;
-              container.insertAdjacentHTML("beforeend", answernResult);
-            }
-          }
-        });
+      ++number_of_all_user_quizzes;
+      loadResult();
+      container.classList.remove("active");
+      result_box.classList.add("activeResult");
+      calculation();
+      numOfQuestion = 0;
+      clearInterval(counter);
+      clearInterval(counterLine);
     }
     clearInterval(counter);
     clearInterval(counterLine);
-    startTimerLine(15);
     startTimer(15);
+    startTimerLine(15);
   }, 700);
 });
 
@@ -80,6 +91,53 @@ function createBullets(numOfQuestion) {
       span.classList.add("active-question");
     }
   }
+}
+
+function loadResult() {
+  fetch(
+    "https://raw.githubusercontent.com/SaharZahran/Online_Quiz_Website/main/quiz_questions.json"
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      clearInterval(counter);
+      clearInterval(counterLine);
+      result.innerHTML = "";
+      total.innerHTML = `correct answers:${correct}       wrong answer:${
+        5 - correct
+      }`;
+      let counterResult = 0;
+      container.insertAdjacentHTML("beforeend", quizName);
+      for (let i = 0; i < data[quiz_number].length; i++) {
+        result.appendChild(largeDiv);
+        largeDiv.classList.add("largeDiv");
+        let h3 = document.createElement("h3");
+        let div = document.createElement("div");
+        largeDiv.appendChild(div);
+        div.classList.add("qusContainer");
+        h3.innerHTML = data[quiz_number][counterResult]["Question"];
+        counterResult++;
+        div.appendChild(h3);
+
+        let divAnswers = document.createElement("div");
+        divAnswers.classList.add("answers");
+
+        for (let j = 0; j < data[quiz_number][i].options.length; j++) {
+          let label = document.createElement("label");
+          label.classList.add("resultLabel");
+          label.innerHTML = data[quiz_number][i].options[j];
+          divAnswers.append(label);
+          let resultArr = localStorage.getItem("user-answers").split(",");
+          if (
+            data[quiz_number][i].options[j] == data[quiz_number][i].right_answer
+          ) {
+            label.classList.add("correct");
+          } else {
+            label.classList.add("incorrect");
+          }
+        }
+        div.appendChild(divAnswers);
+      }
+    });
 }
 
 function addQuestion(arrayOfOptions, number_of_question) {
@@ -116,20 +174,18 @@ function checkRightAnswer(correct_answer) {
       right_answers.push(correct_answer);
       user_answers.push(userAnswer);
       storeResult();
-      // if (userAnswer !== correct_answer) {
-      //   input.nextElementSibling.style.color = "#721c24";
-      //   input.nextElementSibling.style.background = "#f8d7da";
-      //   input.nextElementSibling.style.border = "1px solid #f5c6cb";
-      //   input.insertAdjacentHTML("afterend", crossIconTag);
-      // } else {
-      //   input.nextElementSibling.style.color = "#155724";
-      //   input.nextElementSibling.style.background = "#d4edda";
-      //   input.nextElementSibling.style.border = "1px solid #c3e6cb";
-      //   input.insertAdjacentHTML("afterend", tickIconTag);
-      //   correct++;
-      // }
     }
   });
+  score_text.innerHTML = `${
+    correct >= 3 ? "perfect" : "Hard luck"
+  } ${correct}/5`;
+  if (correct >= 3) {
+    score_text.style.color = "green";
+    result_img.src = "../img/good.jpg";
+  } else {
+    score_text.style.color = "red";
+    result_img.src = "../img/bad.jpg";
+  }
 }
 
 function reset() {
@@ -145,36 +201,8 @@ function storeResult() {
   localStorage.setItem("right-answers", right_answers);
 }
 
-function calculation() {
-  if (
-    correct >= 3 &&
-    localStorage.getItem("number_of_passed_quizzes") === null
-  ) {
-    number_of_passed_quizzes++;
-    localStorage.setItem("number_of_passed_quizzes", number_of_passed_quizzes);
-  } else if (
-    correct >= 3 &&
-    localStorage.getItem("number_of_passed_quizzes") !== null
-  ) {
-    let container = localStorage.getItem("number_of_passed_quizzes");
-    console.log(parse(container));
-    localStorage.setItem("number_of_passed_quizzes", parse(container) + 1);
-  }
-  number_of_all_user_quizzes++;
-  average_point = (number_of_passed_quizzes / number_of_all_user_quizzes) * 100;
-  localStorage.setItem(
-    "number_of_all_user_quizzes",
-    number_of_all_user_quizzes
-  );
-  localStorage.setItem("average_point", average_point);
-  console.log(number_of_passed_quizzes);
-  console.log(number_of_all_user_quizzes);
-  console.log(average_point);
-}
-
 function startTimer(time) {
   counter = setInterval(timer, 1000);
-
   function timer() {
     timeCount.textContent = time;
     time--;
@@ -183,23 +211,27 @@ function startTimer(time) {
       timeCount.textContent = "0" + addZero; //add a 0 before time value
     }
     if (time < 0) {
-      clearInterval(counter); //clear counter
-      timeText.textContent = "Time Off";
+      clearInterval(counter);
+      clearInterval(counterLine); //clear counter
+      reset();
+      numOfQuestion++;
+      loadQuestions(numOfQuestion);
+      startTimer(15);
+      startTimerLine(15);
+
+      numOfQuestion > 4 ? loadResult() : "";
     }
   }
 }
-startTimer(15);
-
 function startTimerLine(time) {
   counterLine = setInterval(timer, 29);
 
   function timer() {
     time += 1; //upgrading time value with 1
-    time_line.style.width = time*0.1821 + "%"; //increasing width of time_line with px by time value
+    time_line.style.width = time * 0.1821 + "%"; //increasing width of time_line with px by time value
     if (time > 549) {
       //if time value is greater than 549
       clearInterval(counterLine); //clear counterLine
     }
   }
 }
-startTimerLine(15);
