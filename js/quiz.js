@@ -15,7 +15,7 @@ const score_text = document.querySelector(".score_text");
 const result = document.querySelector(".result");
 const time_line = document.querySelector(".time_line");
 const result_img = document.querySelector(".result_img");
-const total = document.querySelector(".total");
+const footer = document.querySelector("footer");
 
 let largeDiv = document.createElement("div");
 let userAnswer;
@@ -24,12 +24,10 @@ let right_answer;
 let correct = 0;
 let user_answers = [];
 let right_answers = [];
+let labelAns = [];
 let options;
 let quiz_number = JSON.parse(localStorage.getItem("quiz_number"));
 const questionsNum = document.querySelector(".questionsNum");
-let number_of_passed_quizzes = 0;
-let average_point = 0;
-let number_of_all_user_quizzes = 0;
 
 continue_btn.addEventListener("click", () => {
   info_box.classList.remove("activeInfo");
@@ -41,17 +39,17 @@ continue_btn.addEventListener("click", () => {
 Show_Answer.addEventListener("click", () => {
   result_box.classList.remove("activeResult");
   container.classList.add("active");
+  footer.classList.remove("active");
 });
 
 function loadQuestions(number) {
   if (number < 5) {
     fetch(
-      "https://raw.githubusercontent.com/SaharZahran/Online_Quiz_Website/main/quiz_questions.json"
+      "https://raw.githubusercontent.com/haithamassoli/Online-Quiz/main/quiz_questions.json"
     )
       .then((response) => response.json())
       .then((data) => {
         quizName.innerHTML = data[quiz_number][0].name;
-
         options = data[quiz_number][number].options;
         addQuestion(options, data[quiz_number][number].Question);
         createBullets(number);
@@ -60,27 +58,24 @@ function loadQuestions(number) {
   }
 }
 loadQuestions(numOfQuestion);
+
 submit_Button.addEventListener("click", () => {
   checkRightAnswer(right_answer);
-  setTimeout(() => {
-    numOfQuestion++;
-    reset();
-    loadQuestions(numOfQuestion);
-    if (numOfQuestion > 4) {
-      ++number_of_all_user_quizzes;
-      loadResult();
-      container.classList.remove("active");
-      result_box.classList.add("activeResult");
-      calculation();
-      numOfQuestion = 0;
-      clearInterval(counter);
-      clearInterval(counterLine);
-    }
+  numOfQuestion++;
+  reset();
+  loadQuestions(numOfQuestion);
+  if (numOfQuestion > 4) {
+    loadResult();
+    container.classList.remove("active");
+    result_box.classList.add("activeResult");
+    numOfQuestion = 0;
     clearInterval(counter);
     clearInterval(counterLine);
-    startTimer(15);
-    startTimerLine(15);
-  }, 700);
+  }
+  clearInterval(counter);
+  clearInterval(counterLine);
+  startTimer(15);
+  startTimerLine(15);
 });
 
 function createBullets(numOfQuestion) {
@@ -95,18 +90,14 @@ function createBullets(numOfQuestion) {
 
 function loadResult() {
   fetch(
-    "https://raw.githubusercontent.com/SaharZahran/Online_Quiz_Website/main/quiz_questions.json"
+    "https://raw.githubusercontent.com/haithamassoli/Online-Quiz/main/quiz_questions.json"
   )
     .then((response) => response.json())
     .then((data) => {
       clearInterval(counter);
       clearInterval(counterLine);
       result.innerHTML = "";
-      total.innerHTML = `correct answers:${correct}       wrong answer:${
-        5 - correct
-      }`;
       let counterResult = 0;
-      container.insertAdjacentHTML("beforeend", quizName);
       for (let i = 0; i < data[quiz_number].length; i++) {
         result.appendChild(largeDiv);
         largeDiv.classList.add("largeDiv");
@@ -117,22 +108,27 @@ function loadResult() {
         h3.innerHTML = data[quiz_number][counterResult]["Question"];
         counterResult++;
         div.appendChild(h3);
-
         let divAnswers = document.createElement("div");
         divAnswers.classList.add("answers");
-
         for (let j = 0; j < data[quiz_number][i].options.length; j++) {
           let label = document.createElement("label");
           label.classList.add("resultLabel");
           label.innerHTML = data[quiz_number][i].options[j];
           divAnswers.append(label);
-          let resultArr = localStorage.getItem("user-answers").split(",");
+          labelAns.push(label);
+          labelAns.forEach((e) => {
+            if (
+              e.innerHTML !=
+                JSON.parse(localStorage.getItem("right-answers"))[i] &&
+              e.innerHTML == user_answers[i]
+            ) {
+              e.classList.add("incorrect");
+            }
+          });
           if (
             data[quiz_number][i].options[j] == data[quiz_number][i].right_answer
           ) {
             label.classList.add("correct");
-          } else {
-            label.classList.add("incorrect");
           }
         }
         div.appendChild(divAnswers);
@@ -144,7 +140,6 @@ function addQuestion(arrayOfOptions, number_of_question) {
   const questionText = document.createElement("h2");
   questionText.textContent = number_of_question;
   question.appendChild(questionText);
-
   for (let i = 0; i <= 3; i++) {
     const answer = document.createElement("div");
     answer.classList.add("answer");
@@ -162,9 +157,6 @@ function addQuestion(arrayOfOptions, number_of_question) {
   }
 }
 
-let tickIconTag = '<div class="icon tick"><i class="fas fa-check"></i></div>';
-let crossIconTag = '<div class="icon cross"><i class="fas fa-times"></i></div>';
-
 function checkRightAnswer(correct_answer) {
   const inputAnswers = document.querySelectorAll("input");
   let userAnswer;
@@ -174,8 +166,13 @@ function checkRightAnswer(correct_answer) {
       right_answers.push(correct_answer);
       user_answers.push(userAnswer);
       storeResult();
+      if (userAnswer !== correct_answer) {
+      } else {
+        correct++;
+      }
     }
   });
+
   score_text.innerHTML = `${
     correct >= 3 ? "perfect" : "Hard luck"
   } ${correct}/5`;
@@ -197,8 +194,8 @@ function reset() {
 }
 
 function storeResult() {
-  localStorage.setItem("user-answers", user_answers);
-  localStorage.setItem("right-answers", right_answers);
+  localStorage.setItem("user-answers", JSON.stringify(user_answers));
+  localStorage.setItem("right-answers", JSON.stringify(right_answers));
 }
 
 function startTimer(time) {
@@ -229,7 +226,7 @@ function startTimerLine(time) {
   function timer() {
     time += 1; //upgrading time value with 1
     time_line.style.width = time * 0.1821 + "%"; //increasing width of time_line with px by time value
-    if (time > 549) {
+    if (time > 100 + "%") {
       //if time value is greater than 549
       clearInterval(counterLine); //clear counterLine
     }
