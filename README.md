@@ -29,6 +29,7 @@ An updated version of any Browser connected to an internet connection only needs
 https://miro.com/app/board/o9J_lnIr0VQ=/
 
 ## Mockup
+Quiz Online Project Mockup.pdf
 
 ## Trello
 https://trello.com/b/FJP44Z78/online-quiz-website
