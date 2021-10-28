@@ -1,9 +1,13 @@
 .quiz-container {
-  opacity: 0;
+  display: none;
+}
+
+footer.active {
+  display: none;
 }
 
 .quiz-container.active {
-  opacity: 1;
+  display: block;
 }
 
 /* start  info_box*/
@@ -168,8 +172,4 @@ input.disabled {
 }
 .inputRadio {
   display: none;
-}
-
-.total {
-  padding: 0 30px 10px;
 }
